@@ -124,7 +124,8 @@ class RegisterController extends ChangeNotifier{
     if(usernameRegExp.hasMatch(usernameController.text) && 
       passwordRegExp.hasMatch(passwordController.text) &&
       emailRegExp.hasMatch(emailController.text) &&
-      phoneRegExp.hasMatch(phoneController.text)){
+      phoneRegExp.hasMatch(phoneController.text) &&
+      genderValue != 0){
       
       return true;
     }
@@ -181,5 +182,18 @@ class RegisterController extends ChangeNotifier{
       log('$e');
     }
 
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
+    fullNameController.dispose();
+    cedulaController.dispose();
+
+    super.dispose();
   }
 }

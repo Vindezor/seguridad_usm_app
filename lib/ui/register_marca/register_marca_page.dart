@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/ui/signup/register_controller.dart';
-import 'package:login_app/ui/signup/widgets/register_camps.dart';
+import 'package:login_app/ui/register_marca/register_marca_controller.dart';
+import 'package:login_app/ui/register_marca/widgets/register_marca_camps.dart';
 import 'package:provider/provider.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({ Key? key }) : super(key: key);
+class RegisterMarcaPage extends StatelessWidget {
+  const RegisterMarcaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<RegisterController>(
+        ChangeNotifierProvider<RegisterMarcaController>(
           create: (_) {
-            final controller =  RegisterController();
-            controller.loadGender(context);
+            final controller =  RegisterMarcaController();
+            //controller.loadGender(context);
             return controller;
           },
         ),
@@ -24,7 +24,7 @@ class RegisterPage extends StatelessWidget {
           body: Center(
             child: Padding(
               padding: EdgeInsets.all(16.0),
-              child: RegisterCamps(),
+              child: RegisterMarcaCamps(),
             )
           ),
         ),

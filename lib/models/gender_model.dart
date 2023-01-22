@@ -49,6 +49,6 @@ class Gender {
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "lista": gender,
+        "gender": gender,
     };
 }

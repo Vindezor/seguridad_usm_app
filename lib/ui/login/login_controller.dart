@@ -75,6 +75,6 @@ class LoginController extends ChangeNotifier{
     //   Navigator.of(context).pop();
     //   Navigator.of(context).pushReplacementNamed(Routes.home);
     // }
-    Navigator.of(context).pushNamed(Routes.home);
+    Navigator.of(context).pushNamed(Routes.admin_home);
   }
 }
