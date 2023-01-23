@@ -4,8 +4,10 @@ abstract class Routes{
   static const register = '/register';
   static const splash = '/splash';
   static const account = '/account';
-  static const admin_home = '/admin_home';
-  static const register_marca = '/register_marca';
-  static const register_modelo = '/register_model';
-  static const register_unidad = '/register_unidad';
+  static const adminHome = '/admin_home';
+  static const registerMarca = '/register_marca';
+  static const registerModelo = '/register_model';
+  static const registerUnidad = '/register_unidad';
+  static const changeRol = '/change_rol';
+  static const assignDriver = '/assign_driver';
 }

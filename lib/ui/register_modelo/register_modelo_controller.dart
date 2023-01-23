@@ -1,10 +1,17 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:login_app/models/marca_model.dart';
+import 'package:login_app/services/get_marca_service.dart';
 
+import '../../services/register_modelo_service.dart';
 import '../../widgets/global_alert.dart';
 import '../../widgets/global_loading.dart';
 
 class RegisterModeloController extends ChangeNotifier {
+  final _dio = Dio();
+
   TextEditingController modeloController = TextEditingController();
   
   RegExp modeloRegExp = RegExp(r'^[A-Za-z0-9 \-]{2,}$');
@@ -40,64 +47,38 @@ class RegisterModeloController extends ChangeNotifier {
   }
 
   Future<void> register(BuildContext context) async {
-    globalLoading(context);
-    Navigator.of(context).pop();
-    globalAlert(context, msg: 'Modelo registrado exitosamente', title: "Importante", closeOnPressed: () {
+    FocusScope.of(context).unfocus();
+    final RegisterModeloService registerModeloService = RegisterModeloService(_dio);
+
+    try {
+      globalLoading(context);
+      final response = await registerModeloService.registerModelo(modeloController.text, marcaValue);
+      Navigator.of(context).pop();
+      if(response!.status == "SUCCESS"){
+        globalAlert(context, msg: 'Modelo registrado exitosamente', title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
-    // final response = await RegisterService(Dio()).register(
-    //   emailController.text,
-    //   phoneController.text,
-    //   fullNameController.text,
-    //   cedulaController.text,
-    //   usernameController.text,
-    //   genderValue,
-    //   passwordController.text,
-    // );
-    // if(response.status == "ERROR"){
-    //   Navigator.of(context).pop();
-    //   globalAlert(context, msg: response.message, title: "Importante");
-    // }else{
-    //   Navigator.of(context).pop();
-    //   globalAlert(
-    //     context,
-    //     msg: response.message,
-    //     title: "Importante",
-    //     closeOnPressed: () {
-    //       Navigator.of(context).pop();
-    //       Navigator.of(context).pop();
-    //     }
-    //   );
-    // }
+      } else {
+        globalAlert(context, msg: response.msg!, title: "Error", closeOnPressed: () {
+          Navigator.of(context).pop();
+        });
+      }
+    } catch (e) {
+      log('$e');
+    }
   }
 
   void loadMarca(BuildContext context) async {
-    //final GetGenderService getGender = GetGenderService(_dio);
-    // try {
-    //   //globalLoading(context);
-    //   final response = await getGender.getGender();
-    //   generos = response!.data;
-    //   //Navigator.of(context).pop();
-    //   notifyListeners();
-    // } catch (e) {
-    //   //Navigator.of(context).pop();
-    //   // globalAlert(
-    //   //   context,
-    //   //   msg: 'Disculpe, la plataforma no se encuentra disponible',
-    //   //   title: 'Importante',
-    //   //   closeOnPressed: () {
-    //   //     Navigator.of(context).pop();
-    //   //     Navigator.of(context).pop();
-    //   //   }
-    //   // );
-    //   log('$e');
-    // }
+    final GetMarcaService getMarcaService = GetMarcaService(_dio);
 
-    marcas = [
-      Marca(id: 1, marca: 'Encava')
-    ];
-    notifyListeners();
+    try {
+      final response = await getMarcaService.getMarca();
+      marcas = response!.data;
+      notifyListeners();
+    } catch (e) {
+      log("$e");
+    }
   }
   
   @override

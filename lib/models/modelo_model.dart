@@ -37,14 +37,17 @@ class Modelo {
     Modelo({
         required this.id,
         required this.modelo,
+        required this.idMarca
     });
 
     int id;
     String modelo;
+    int idMarca;
 
     factory Modelo.fromJson(Map<String, dynamic> json) => Modelo(
         id: json["id_modelo"],
         modelo: json["nb_modelo"],
+        idMarca: json["id_marca"]
     );
 
     Map<String, dynamic> toJson() => {

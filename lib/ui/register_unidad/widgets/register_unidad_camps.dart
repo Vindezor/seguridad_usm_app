@@ -16,7 +16,8 @@ class RegisterUnidadCamps extends StatefulWidget {
 
 class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+  final GlobalKey<FormFieldState> _keyModelo = GlobalKey<FormFieldState>();
+
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterUnidadController>(context);
@@ -64,14 +65,17 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
             ).toList(),
             validator: controller.validateMarca,
             onChanged: (int? value) {
-              _formKey.currentState!.validate();
               if(value != null){
+                controller.changeModelo(value);
                 controller.marcaValue = value;
+                resetModelo();
               }
+              _formKey.currentState!.validate();
             },
           ),
           const SizedBox(height: 10,),
           DropdownButtonFormField(
+            key: _keyModelo,
             decoration: const InputDecoration(
               icon: Icon(Icons.bus_alert),
               border: OutlineInputBorder(),
@@ -82,7 +86,7 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
                 ),
               ),
             ),
-            items: controller.modelos!.map(
+            items: controller.modelosAct!.map(
               (e) => DropdownMenuItem(
                 child: Text(e.modelo),
                 value: e.id,
@@ -169,5 +173,11 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
         ],
       )
     );
+  }
+  
+  void resetModelo(){
+    if(_keyModelo.currentState != null){
+      _keyModelo.currentState!.reset();
+    }
   }
 }

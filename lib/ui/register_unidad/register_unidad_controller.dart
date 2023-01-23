@@ -1,12 +1,20 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/models/modelo_model.dart';
+import 'package:login_app/services/register_unidad_service.dart';
 import 'package:login_app/widgets/global_alert.dart';
 
 import '../../models/marca_model.dart';
+import '../../services/get_marca_service.dart';
+import '../../services/get_modelo_service.dart';
 import '../../widgets/global_loading.dart';
 
 class RegisterUnidadController extends ChangeNotifier {
+  final _dio = Dio();
+
   TextEditingController nombreUnidadController = TextEditingController();
   TextEditingController placaUnidadController = TextEditingController();
   TextEditingController yearController = TextEditingController();
@@ -17,6 +25,8 @@ class RegisterUnidadController extends ChangeNotifier {
   int marcaValue = 0;
 
   List<Modelo>? modelos = [];
+
+  List<Modelo>? modelosAct = [];
   int modeloValue = 0;
 
   RegExp nombreUnidadRegExp = RegExp(r'^[a-zA-Z ]{5,}$');
@@ -80,95 +90,60 @@ class RegisterUnidadController extends ChangeNotifier {
     return false;
   }
 
+  void changeModelo(int idMarca){
+    if(modelos != null){
+      modelosAct = modelos!.where((element) => element.idMarca == idMarca).toList();
+      modeloValue = 0;
+      notifyListeners();
+    }
+  }
 
   void loadMarca(BuildContext context) async {
-    //final GetGenderService getGender = GetGenderService(_dio);
-    // try {
-    //   //globalLoading(context);
-    //   final response = await getGender.getGender();
-    //   generos = response!.data;
-    //   //Navigator.of(context).pop();
-    //   notifyListeners();
-    // } catch (e) {
-    //   //Navigator.of(context).pop();
-    //   // globalAlert(
-    //   //   context,
-    //   //   msg: 'Disculpe, la plataforma no se encuentra disponible',
-    //   //   title: 'Importante',
-    //   //   closeOnPressed: () {
-    //   //     Navigator.of(context).pop();
-    //   //     Navigator.of(context).pop();
-    //   //   }
-    //   // );
-    //   log('$e');
-    // }
+    final GetMarcaService getMarcaService = GetMarcaService(_dio);
 
-    marcas = [
-      Marca(id: 1, marca: 'Encava')
-    ];
-    loadModelo(context);
-    notifyListeners();
+    try {
+      final response = await getMarcaService.getMarca();
+      marcas = response!.data;
+      loadModelo(context);
+      notifyListeners();
+    } catch (e) {
+      log("$e");
+    }
   }
 
   void loadModelo(BuildContext context) async {
-    //final GetGenderService getGender = GetGenderService(_dio);
-    // try {
-    //   //globalLoading(context);
-    //   final response = await getGender.getGender();
-    //   generos = response!.data;
-    //   //Navigator.of(context).pop();
-    //   notifyListeners();
-    // } catch (e) {
-    //   //Navigator.of(context).pop();
-    //   // globalAlert(
-    //   //   context,
-    //   //   msg: 'Disculpe, la plataforma no se encuentra disponible',
-    //   //   title: 'Importante',
-    //   //   closeOnPressed: () {
-    //   //     Navigator.of(context).pop();
-    //   //     Navigator.of(context).pop();
-    //   //   }
-    //   // );
-    //   log('$e');
-    // }
+    final GetModeloService getModeloService = GetModeloService(_dio);
 
-    modelos = [
-      Modelo(id: 1, modelo: 'ENT 610')
-    ];
-    notifyListeners();
+    try {
+      final response = await getModeloService.getModelo();
+      modelos = response!.data;
+      notifyListeners();
+    } catch (e) {
+      log("$e");
+    }
   }
 
   Future<void> register(BuildContext context) async {
-    globalLoading(context);
-    Navigator.of(context).pop();
-    globalAlert(context, msg: 'Unidad registrada exitosamente', title: "Importante", closeOnPressed: () {
+    FocusScope.of(context).unfocus();
+    final RegisterUnidadService registerUnidadService = RegisterUnidadService(_dio);
+
+    try {
+      globalLoading(context);
+      final response = await registerUnidadService.registerUnidad(nombreUnidadController.text, placaUnidadController.text, yearValue, modeloValue);
+      Navigator.of(context).pop();
+      if(response!.status == "SUCCESS"){
+        globalAlert(context, msg: 'Unidad registrada exitosamente', title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
-    // final response = await RegisterService(Dio()).register(
-    //   emailController.text,
-    //   phoneController.text,
-    //   fullNameController.text,
-    //   cedulaController.text,
-    //   usernameController.text,
-    //   genderValue,
-    //   passwordController.text,
-    // );
-    // if(response.status == "ERROR"){
-    //   Navigator.of(context).pop();
-    //   globalAlert(context, msg: response.message, title: "Importante");
-    // }else{
-    //   Navigator.of(context).pop();
-    //   globalAlert(
-    //     context,
-    //     msg: response.message,
-    //     title: "Importante",
-    //     closeOnPressed: () {
-    //       Navigator.of(context).pop();
-    //       Navigator.of(context).pop();
-    //     }
-    //   );
-    // }
+      } else {
+        globalAlert(context, msg: response.msg!, title: "Error", closeOnPressed: () {
+          Navigator.of(context).pop();
+        });
+      }
+    } catch (e) {
+      log('$e');
+    }
   }
 
   void handleReadOnlyInputClick(BuildContext context, GlobalKey<FormState> formKey) {

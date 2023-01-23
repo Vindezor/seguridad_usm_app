@@ -34,21 +34,21 @@ class AdminHomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
-              AdminButton(Icons.directions_bus, 'Registrar unidad', Routes.register_unidad),
-              AdminButton(Icons.badge, 'Cambiar rol', Routes.register_marca),
+              AdminButton(Icons.directions_bus, 'Registrar unidad', Routes.registerUnidad),
+              AdminButton(Icons.badge, 'Cambiar rol', Routes.changeRol),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
-              AdminButton(Icons.bus_alert, 'Registrar marca', Routes.register_marca),
-              AdminButton(Icons.bus_alert, 'Registrar modelo', Routes.register_modelo),
+              AdminButton(Icons.bus_alert, 'Registrar marca', Routes.registerMarca),
+              AdminButton(Icons.bus_alert, 'Registrar modelo', Routes.registerModelo),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: const [
-              AdminButton(Icons.person_search, 'Asignar chofer', Routes.register_marca),
+              AdminButton(Icons.person_search, 'Asignar chofer', Routes.assignDriver),
             ],
           )
         ],
