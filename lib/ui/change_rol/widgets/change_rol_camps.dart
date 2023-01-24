@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../change_rol_controller.dart';
@@ -17,6 +18,8 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<ChangeRolController>(context);
+    const double? customHeight = 30;
+
     return Form(
       key: _formKey,
       child: ListView(
@@ -24,10 +27,21 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
-          const SizedBox(height: 10,),
+          Center(
+            child: Text(
+              "Cambio de rol",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30
+                ),
+              )
+            ),
+          ),
+          const SizedBox(height: 30,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.person, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Usuario",
@@ -50,10 +64,10 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.content_paste_search_outlined, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Tipo de usuario",
@@ -76,21 +90,23 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Registrar cambio",
-              style: TextStyle(
-                fontSize: 20,
+          const SizedBox(height: customHeight,),
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Registrar cambio",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
         ],
       )

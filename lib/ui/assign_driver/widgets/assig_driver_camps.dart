@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/ui/assign_driver/assign_driver_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -12,10 +13,12 @@ class AssignDriverCamps extends StatefulWidget {
 
 class _AssignDriverCampsState extends State<AssignDriverCamps> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<AssignDriverController>(context);
+    const double? customHeight = 30;
+
     return Form(
       key: _formKey,
       child: ListView(
@@ -23,11 +26,22 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
-          const SizedBox(height: 10,),
+           Center(
+            child: Text(
+              "Asignar chofer",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30
+                ),
+              )
+            ),
+          ),
+          const SizedBox(height: customHeight,),
           DropdownButtonFormField(
             isExpanded: true,
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.directions_bus, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Unidad",
@@ -50,10 +64,10 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.person_search, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Conductor",
@@ -76,21 +90,23 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Asignar chofer",
-              style: TextStyle(
-                fontSize: 20,
+          const SizedBox(height: customHeight,),
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Asignar chofer",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
         ],
       )

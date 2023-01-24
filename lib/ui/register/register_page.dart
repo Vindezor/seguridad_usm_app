@@ -20,12 +20,24 @@ class RegisterPage extends StatelessWidget {
       ],
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: const Scaffold(
+        child: Scaffold(
           body: Center(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: RegisterCamps(),
-            )
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xffe1f0f5),
+                    Color(0xffa6dee9)
+                  ]
+                )
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: RegisterCamps(),
+              ),
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/utils/uppercase_formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +18,12 @@ class RegisterUnidadCamps extends StatefulWidget {
 class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormFieldState> _keyModelo = GlobalKey<FormFieldState>();
-
+  
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterUnidadController>(context);
+    const double? customHeight = 30;
+
     return Form(
       key: _formKey,
       child: ListView(
@@ -28,12 +31,23 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
-          const SizedBox(height: 10,),
+          Center(
+            child: Text(
+              "Registro de unidad",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30
+                ),
+              )
+            ),
+          ),
+          const SizedBox(height: 30,),
           TextFormField(
             maxLength: 30,
             controller: controller.nombreUnidadController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.directions_bus),
+              icon: Icon(Icons.edit_note, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Nombre de la Unidad",
@@ -48,7 +62,7 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
           const SizedBox(height: 10,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.bus_alert, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Marca",
@@ -73,11 +87,11 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
               _formKey.currentState!.validate();
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           DropdownButtonFormField(
             key: _keyModelo,
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.bus_alert, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Modelo",
@@ -100,12 +114,12 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           TextFormField(
             readOnly: true,
             controller: controller.yearController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.directions_bus),
+              icon: Icon(Icons.calendar_month, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Año",
@@ -134,12 +148,12 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
               controller.handleReadOnlyInputClick(context, _formKey);
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           TextFormField(
             maxLength: 7,
             controller: controller.placaUnidadController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.directions_bus),
+              icon: Icon(Icons.badge, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Placa de la Unidad",
@@ -154,21 +168,23 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
               UpperCaseTextFormatter(),
             ],
           ),
-          const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Registrar",
-              style: TextStyle(
-                fontSize: 20,
+          const SizedBox(height: customHeight,),
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Registrar",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
         ],
       )

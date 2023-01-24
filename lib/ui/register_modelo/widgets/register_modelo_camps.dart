@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../register_modelo_controller.dart';
@@ -16,6 +17,8 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterModeloController>(context);
+    const double? customHeight = 30;
+
     return Form(
       key: _formKey,
       child: ListView(
@@ -23,10 +26,21 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
-          const SizedBox(height: 10,),
+          Center(
+            child: Text(
+              "Registro de modelo",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30
+                ),
+              )
+            ),
+          ),
+          const SizedBox(height: customHeight,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.bus_alert, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Marca",
@@ -49,13 +63,13 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
               }
             },
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: customHeight,),
           TextFormField(
             keyboardType: TextInputType.text,
             maxLength: 20,
             controller: controller.modeloController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.bus_alert, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Modelo",
@@ -68,20 +82,22 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
             onChanged: (_) => _formKey.currentState!.validate(),
           ),
           const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Registrar",
-              style: TextStyle(
-                fontSize: 20,
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Registrar",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
         ],
       )

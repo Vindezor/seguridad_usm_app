@@ -35,23 +35,40 @@ class LoginModel {
 
 class Data {
     Data({
-        required this.token,
-        required this.refreshToken,
         required this.id,
+        required this.username,
+        required this.correo,
+        required this.cedula,
+        required this.fullName,
+        required this.telefono,
+        required this.tipoUsuario,
     });
 
-    String token;
-    String refreshToken; 
-    String id;
+    int id;
+    String username;
+    String correo; 
+    int cedula;
+    String fullName;
+    String telefono;
+    String tipoUsuario;
+
     factory Data.fromJson(Map<String, dynamic> json) => Data(
-        token: json["token"],
-        refreshToken: json["refreshToken"],
-        id: json["id"],
+        id: json["id_usuario"],
+        cedula: json["cedula_usuario"],
+        correo: json["correo_usuario"],
+        fullName: json["full_name_usuario"],
+        telefono: json["telefono_usuario"],
+        tipoUsuario: json["nb_tipo_usuario"],
+        username: json["username_usuario"],
     );
 
     Map<String, dynamic> toJson() => {
-        "token": token,
-        "refreshToken": refreshToken,
-        "id": id,
+        "id_usuario": id,
+        "cedula_usuario": cedula,
+        "correo_usuario": correo,
+        "full_name_usuario": fullName,
+        "telefono_usuario": telefono,
+        "nb_tipo_usuario": tipoUsuario,
+        "username_usuario": username,
     };
 }

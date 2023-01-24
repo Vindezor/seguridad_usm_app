@@ -8,6 +8,8 @@ import 'package:login_app/services/get_gender_service.dart';
 import 'package:login_app/widgets/global_loading.dart';
 
 import '../../models/gender_model.dart';
+import '../../services/emergencia_service.dart';
+import '../../widgets/global_alert.dart';
 
 class HomeController extends ChangeNotifier{
   // bool isSnackbarShowing = false;
@@ -15,7 +17,7 @@ class HomeController extends ChangeNotifier{
   // bool isLoading = false;
   // Data? dataList;
   // List<ListItem> toDoList = [];
-  // Dio _dio = Dio();
+  final _dio = Dio();
   // final storage = const FlutterSecureStorage();
 
   // // void addItem(String text, BuildContext context) async {
@@ -131,4 +133,29 @@ class HomeController extends ChangeNotifier{
   //   final items = toDoList.map((e) => e.text).toList();
   //   return items;
   // }
+
+  Future<void> emergencia(BuildContext context) async {
+    FocusScope.of(context).unfocus();
+    final EmergenciaService emergenciaService = EmergenciaService(_dio);
+
+    try {
+      globalLoading(context);
+      final response = await emergenciaService.emergencia('prueba', 'prueba@gmail.com', '10.474139, -66.831494', '42242715167');
+      Navigator.of(context).pop();
+      if(response!.status == "SUCCESS"){
+        globalAlert(context, msg: response.msg!, title: "Importante", closeOnPressed: () {
+          Navigator.of(context).pop();
+        });
+      } else {
+        globalAlert(context, msg: response.msg!, title: "Importante", closeOnPressed: () {
+          Navigator.of(context).pop();
+        });
+      }
+    } catch (e) {
+      log('$e');
+      globalAlert(context, msg: "Error al enviar correo", title: "Importante", closeOnPressed: () {
+          Navigator.of(context).pop();
+        });
+    }
+  }
 }

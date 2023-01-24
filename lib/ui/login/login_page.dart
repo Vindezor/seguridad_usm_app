@@ -18,12 +18,24 @@ class LoginPage extends StatelessWidget {
         onWillPop: () async => false,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: const Scaffold(
-            body: Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: LoginCamps(),
-              )
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xffe1f0f5),
+                    Color(0xffa6dee9)
+                  ]
+                )
+              ),
+              child: const  Center(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: LoginCamps(),
+                )
+              ),
             ),
           ),
         ),

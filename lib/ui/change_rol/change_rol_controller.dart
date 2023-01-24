@@ -92,11 +92,5 @@ class ChangeRolController extends ChangeNotifier {
     } catch (e) {
       log('$e');
     }
-
-    Navigator.of(context).pop();
-    globalAlert(context, msg: 'Usuario cambiado exitosamente', title: "Importante", closeOnPressed: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        });
   }
 }

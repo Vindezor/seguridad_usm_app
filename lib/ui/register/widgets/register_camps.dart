@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../register_controller.dart';
@@ -30,16 +31,38 @@ class _RegisterCampsState extends State<RegisterCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
+          Center(
+            child: Text(
+              "Seguridad USM",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 50
+                ),
+              )
+            ),
+          ),
+          Center(
+            child: Text(
+              "Registro de usuario",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 20
+                ),
+              )
+            ),
+          ),
           const SizedBox(height: 10,),
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             maxLength: 50,
             controller: controller.emailController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.email),
+              icon: Icon(Icons.email, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
-                "Email",
+                "Correo electrónico",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -54,10 +77,10 @@ class _RegisterCampsState extends State<RegisterCamps> {
             maxLength: 14,
             controller: controller.phoneController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.phone),
+              icon: Icon(Icons.phone, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
-                "Telefono",
+                "Teléfono",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -74,7 +97,7 @@ class _RegisterCampsState extends State<RegisterCamps> {
             maxLength: 30,
             controller: controller.fullNameController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Nombre Completo",
@@ -92,7 +115,7 @@ class _RegisterCampsState extends State<RegisterCamps> {
             maxLength: 9,
             controller: controller.cedulaController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.credit_card),
+              icon: Icon(Icons.credit_card, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Cedula",
@@ -109,10 +132,10 @@ class _RegisterCampsState extends State<RegisterCamps> {
             maxLength: 15,
             controller: controller.usernameController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
-                "Username",
+                "Nombre de usuario",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -124,10 +147,10 @@ class _RegisterCampsState extends State<RegisterCamps> {
           const SizedBox(height: 10,),
           DropdownButtonFormField(
             decoration: const InputDecoration(
-              icon: Icon(Icons.people_alt),
+              icon: Icon(Icons.people_alt, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
-                "Genero",
+                "Género",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -153,10 +176,10 @@ class _RegisterCampsState extends State<RegisterCamps> {
             maxLength: 18,
             controller: controller.passwordController,
             decoration: InputDecoration(
-              icon: const Icon(Icons.password),
+              icon: const Icon(Icons.password, color: Colors.blue,),
               border: const OutlineInputBorder(),
               label: const Text(
-                "Password",
+                "Contraseña",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -170,20 +193,22 @@ class _RegisterCampsState extends State<RegisterCamps> {
             onChanged: (_) => _formKey.currentState!.validate(),
           ),
           const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Register",
-              style: TextStyle(
-                fontSize: 20,
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Registrarse",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
           const SizedBox(height: 10,),
           Center(

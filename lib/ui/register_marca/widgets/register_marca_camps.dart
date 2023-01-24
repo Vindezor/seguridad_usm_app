@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../register_marca_controller.dart';
@@ -16,6 +17,7 @@ class _RegisterMarcaCampsState extends State<RegisterMarcaCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterMarcaController>(context);
+    const double? customHeight = 30;
     return Form(
       key: _formKey,
       child: ListView(
@@ -23,13 +25,24 @@ class _RegisterMarcaCampsState extends State<RegisterMarcaCamps> {
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
-          const SizedBox(height: 10,),
+          Center(
+            child: Text(
+              "Registro de marca",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30
+                ),
+              )
+            ),
+          ),
+          const SizedBox(height: customHeight,),
           TextFormField(
             keyboardType: TextInputType.text,
             maxLength: 15,
             controller: controller.marcaController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.bus_alert),
+              icon: Icon(Icons.bus_alert, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
                 "Marca",
@@ -42,20 +55,22 @@ class _RegisterMarcaCampsState extends State<RegisterMarcaCamps> {
             onChanged: (_) => _formKey.currentState!.validate(),
           ),
           const SizedBox(height: 10,),
-          CupertinoButton(
-            disabledColor: Colors.grey,
-            color: Colors.blue,
-            child: const Text(
-              "Registrar",
-              style: TextStyle(
-                fontSize: 20,
+          Align(
+            child: CupertinoButton(
+              disabledColor: Colors.grey,
+              color: Colors.blue,
+              child: const Text(
+                "Registrar",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.register(context);
-            }
-            : null,
           ),
         ],
       )

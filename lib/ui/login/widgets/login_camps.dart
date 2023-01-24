@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/routes/routes.dart';
 import 'package:login_app/ui/login/login_controller.dart';
 import 'package:login_app/widgets/global_alert.dart';
@@ -31,14 +32,32 @@ class _LoginCampsState extends State<LoginCamps> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          Text(
+            "Seguridad USM",
+            style: GoogleFonts.lobster(
+              textStyle: const TextStyle(
+                color: Colors.blue,
+                fontSize: 50
+              ),
+            )
+          ),
+          Text(
+            "Inicio de sesión",
+            style: GoogleFonts.lobster(
+              textStyle: const TextStyle(
+                color: Colors.blue,
+                fontSize: 20
+              ),
+            )
+          ),
           TextFormField(
             maxLength: 15,
             controller: controller.usernameController,
             decoration: const InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person, color: Colors.blue,),
               border: OutlineInputBorder(),
               label: Text(
-                "Username",
+                "Nombre de usuario",
                 style: TextStyle(
                   fontSize: 20
                 ),
@@ -52,17 +71,17 @@ class _LoginCampsState extends State<LoginCamps> {
             maxLength: 18,
             controller: controller.passwordController,
             decoration: InputDecoration(
-              icon: const Icon(Icons.password),
+              icon: const Icon(Icons.password, color: Colors.blue,),
               border: const OutlineInputBorder(),
               label: const Text(
-                "Password",
+                "Contraseña",
                 style: TextStyle(
                   fontSize: 20
                 ),
               ),
               suffixIcon: IconButton(
                 onPressed: controller.changeHidePassword,
-                icon: const Icon(Icons.remove_red_eye)
+                icon: const Icon(Icons.remove_red_eye, color: Colors.blue,)
               ),
             ),
             validator: controller.validatePassword,
@@ -72,7 +91,7 @@ class _LoginCampsState extends State<LoginCamps> {
             disabledColor: Colors.grey,
             color: Colors.blue,
             child: const Text(
-              "Login",
+              "Iniciar sesión",
               style: TextStyle(
                 fontSize: 20,
               ),

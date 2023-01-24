@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/routes/routes.dart';
 
 class SplashPage extends StatelessWidget {
@@ -25,13 +26,27 @@ class SplashPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              CircularProgressIndicator(),
-              Text("Login App"),
-            ],
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xffe1f0f5),
+                Color(0xffa6dee9)
+              ]
+            )
+          ),
+          child: Center(
+            child: Text(
+              "Seguridad USM",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  color: Colors.blue,
+                  fontSize: 50
+                ),
+              )
+            ),
           ),
         ),
       ),
