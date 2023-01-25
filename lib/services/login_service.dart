@@ -13,22 +13,22 @@ class LoginService{
   Future<LoginModel> login(String username, String password)async {
     try{
       final response = await _dio.post(
-        "$ip/api/v1/login",
+        "$ip/login",
         data: {
           "username": username,
-          "password": password
+          "pw": password
         },
       );
       final resp = LoginModel.fromJson(response.data);
       return resp;
     } on DioError catch(e){
       if(e.type == DioErrorType.connectTimeout){
-        return LoginModel(status: "ERROR", message: "Error del servidor", data: null);
+        return LoginModel(status: "ERROR", msg: "Error del servidor", data: null);
       }
       if(e.type == DioErrorType.other){
-        return LoginModel(status: "ERROR", message: "Sin conexión a internet", data: null);
+        return LoginModel(status: "ERROR", msg: "Sin conexión a internet", data: null);
       }
-      return LoginModel(status: "ERROR", message: "Error $e", data: null);
+      return LoginModel(status: "ERROR", msg: "Error $e", data: null);
     }
   }
 }

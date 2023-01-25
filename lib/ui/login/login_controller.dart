@@ -11,6 +11,8 @@ import '../../services/login_service.dart';
 import '../../widgets/global_alert.dart';
 
 class LoginController extends ChangeNotifier{
+  final _dio = Dio();
+
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -59,6 +61,23 @@ class LoginController extends ChangeNotifier{
   }
 
   Future<void> login(BuildContext context) async {
+    final LoginService loginService = LoginService(_dio);
+
+    try {
+      final response = await loginService.login(usernameController.text, passwordController.text);
+      if(response.status == 'SUCCESS'){
+        storage.write(key: 'id_usuario', value: '${response.data!.id}');
+        storage.write(key: 'username_usuario', value: response.data!.username);
+        storage.write(key: 'correo_usuario', value: response.data!.correo);
+        storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
+        storage.write(key: 'full_name_usuario', value: response.data!.fullName);
+        storage.write(key: 'telefono_usuario', value: response.data!.telefono);
+        storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
+      }
+    } catch (e) {
+      log('$e');
+    }
+    
     // globalLoading(context);
     // final response = await LoginService(Dio()).login(
     //   usernameController.text,

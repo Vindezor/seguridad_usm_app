@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
         ),
         appBar: AppBar(
           title: Text(
-            "Administrador",
+            "Estudiante",
             style: GoogleFonts.lobster(
               textStyle: const TextStyle(
                 //color: Colors.white,
