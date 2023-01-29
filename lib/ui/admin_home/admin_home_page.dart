@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/ui/admin_home/widgets/admin_button.dart';
+import 'package:login_app/utils/logout.dart';
 
 import '../../routes/routes.dart';
 
@@ -71,7 +72,7 @@ class AdminHomePage extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () => {
-                Navigator.of(context).pop()
+                logout(context)
               },
               child: const Icon(
                 Icons.logout,

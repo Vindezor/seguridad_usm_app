@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void globalAlert(
+Future<void> globalAlert(
   BuildContext context, {
   required String msg,
   required String title,
   void Function()? acceptOnPressed,
   void Function()? cancelOnPressed,
   void Function()? closeOnPressed,
-}) {
-  showDialog(
+  String? closeText,
+}) async {
+  return showDialog(
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
@@ -41,9 +42,9 @@ void globalAlert(
           : [
             CupertinoDialogAction(
               onPressed: closeOnPressed ?? () => Navigator.of(context).pop(),
-              child: const Text(
-                "Cerrar",
-                style: TextStyle(color: Colors.black),
+              child: Text(
+                closeText ?? "Cerrar",
+                style: const TextStyle(color: Colors.black),
               ),
             )
           ]

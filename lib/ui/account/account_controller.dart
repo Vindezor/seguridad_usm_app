@@ -27,4 +27,13 @@ class AccountController extends ChangeNotifier {
     dataLoaded = true;
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    usernameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 }

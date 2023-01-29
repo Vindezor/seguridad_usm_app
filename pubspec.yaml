@@ -39,6 +39,7 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   flutter_multi_formatter: ^2.10.1
   google_fonts: ^3.0.1
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

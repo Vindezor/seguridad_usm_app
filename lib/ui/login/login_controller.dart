@@ -77,11 +77,11 @@ class LoginController extends ChangeNotifier{
         usernameController.clear();
         passwordController.clear();
         if(response.data!.tipoUsuario == 'Estudiante'){
-          Navigator.of(context).pushNamed(Routes.home);
+          Navigator.of(context).pushReplacementNamed(Routes.home);
         } else if(response.data!.tipoUsuario == 'Administrador'){
-          Navigator.of(context).pushNamed(Routes.adminHome);
+          Navigator.of(context).pushReplacementNamed(Routes.adminHome);
         } else {
-          Navigator.of(context).pushNamed(Routes.blockedUser);
+          Navigator.of(context).pushReplacementNamed(Routes.blockedUser);
         }
         notifyListeners();
       } else {
@@ -90,5 +90,13 @@ class LoginController extends ChangeNotifier{
     } catch (e) {
       log('$e');
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
