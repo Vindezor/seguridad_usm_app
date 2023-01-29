@@ -10,4 +10,5 @@ abstract class Routes{
   static const registerUnidad = '/register_unidad';
   static const changeRol = '/change_rol';
   static const assignDriver = '/assign_driver';
+  static const blockedUser = '/blocked_user';
 }

@@ -3,6 +3,7 @@ import 'package:login_app/routes/routes.dart';
 import 'package:login_app/ui/account/account_page.dart';
 import 'package:login_app/ui/admin_home/admin_home_page.dart';
 import 'package:login_app/ui/assign_driver/assign_driver_page.dart';
+import 'package:login_app/ui/blocked_user/blocked_user_page.dart';
 import 'package:login_app/ui/change_rol/change_rol_page.dart';
 import 'package:login_app/ui/home/home_page.dart';
 import 'package:login_app/ui/login/login_page.dart';
@@ -26,5 +27,6 @@ Map<String, Widget Function(BuildContext context)> appRoutes() {
     Routes.registerUnidad: (_) => const RegisterUnidadPage(),
     Routes.changeRol: (_) => const ChangeRolPage(),
     Routes.assignDriver: (_) => const AssignDriverPage(),
+    Routes.blockedUser: (_) => const BlockedUserPage(),
   };
 }

@@ -51,49 +51,44 @@ class LoginController extends ChangeNotifier{
   }
 
   bool enableButton(){
-    // if(usernameRegExp.hasMatch(usernameController.text) && 
-    //   passwordRegExp.hasMatch(passwordController.text)){
+    if(usernameRegExp.hasMatch(usernameController.text) && 
+      passwordRegExp.hasMatch(passwordController.text)){
       
-    //   return true;
-    // }
-    // return false;
-    return true;
+      return true;
+    }
+    return false;
   }
 
   Future<void> login(BuildContext context) async {
     final LoginService loginService = LoginService(_dio);
 
     try {
+      globalLoading(context);
       final response = await loginService.login(usernameController.text, passwordController.text);
+      Navigator.of(context).pop();
       if(response.status == 'SUCCESS'){
-        storage.write(key: 'id_usuario', value: '${response.data!.id}');
-        storage.write(key: 'username_usuario', value: response.data!.username);
-        storage.write(key: 'correo_usuario', value: response.data!.correo);
-        storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
-        storage.write(key: 'full_name_usuario', value: response.data!.fullName);
-        storage.write(key: 'telefono_usuario', value: response.data!.telefono);
-        storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
+        await storage.write(key: 'id_usuario', value: '${response.data!.id}');
+        await storage.write(key: 'username_usuario', value: response.data!.username);
+        await storage.write(key: 'correo_usuario', value: response.data!.correo);
+        await storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
+        await storage.write(key: 'full_name_usuario', value: response.data!.fullName);
+        await storage.write(key: 'telefono_usuario', value: response.data!.telefono);
+        await storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
+        usernameController.clear();
+        passwordController.clear();
+        if(response.data!.tipoUsuario == 'Estudiante'){
+          Navigator.of(context).pushNamed(Routes.home);
+        } else if(response.data!.tipoUsuario == 'Administrador'){
+          Navigator.of(context).pushNamed(Routes.adminHome);
+        } else {
+          Navigator.of(context).pushNamed(Routes.blockedUser);
+        }
+        notifyListeners();
+      } else {
+        globalAlert(context, msg: response.msg, title: "Error");
       }
     } catch (e) {
       log('$e');
     }
-    
-    // globalLoading(context);
-    // final response = await LoginService(Dio()).login(
-    //   usernameController.text,
-    //   passwordController.text,
-    // );
-    // if(response.status == "ERROR"){
-    //   Navigator.of(context).pop();
-    //   globalAlert(context, msg: response.message, title: "Importante");
-    // }else{
-    //   await storage.write(key: 'username', value: usernameController.text);
-    //   await storage.write(key: 'token', value: response.data!.token);
-    //   await storage.write(key: 'refreshToken', value: response.data!.refreshToken);
-    //   await storage.write(key: 'id', value: response.data!.id);
-    //   Navigator.of(context).pop();
-    //   Navigator.of(context).pushReplacementNamed(Routes.home);
-    // }
-    Navigator.of(context).pushNamed(Routes.home);
   }
 }

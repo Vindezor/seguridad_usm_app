@@ -10,7 +10,6 @@ import 'package:login_app/routes/routes.dart';
 import 'package:login_app/ui/login/login_controller.dart';
 import 'package:login_app/widgets/global_alert.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/login_service.dart';
 

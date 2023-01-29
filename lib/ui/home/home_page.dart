@@ -13,96 +13,99 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<HomeController>(
-          create: (_) => HomeController(),
-        ),
-      ],
-      child: Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<HomeController>(
+            create: (_) => HomeController(),
+          ),
+        ],
+        child: Scaffold(
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    "Seguridad USM",
+                    style: GoogleFonts.lobster(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 40
+                      ),
+                    )
+                  ),
                 ),
-                child: Text(
-                  "Seguridad USM",
-                  style: GoogleFonts.lobster(
-                    textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 40
-                    ),
-                  )
+                ListTile(
+                  title: const Text("Perfil de usuario", style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20
+                  ),),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed(Routes.account);
+                  },
                 ),
-              ),
-              ListTile(
-                title: const Text("Perfil de usuario", style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 20
-                ),),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushNamed(Routes.account);
+              ],
+            ),
+          ),
+          appBar: AppBar(
+            title: Text(
+              "Estudiante",
+              style: GoogleFonts.lobster(
+                textStyle: const TextStyle(
+                  //color: Colors.white,
+                  fontSize: 30
+                ),
+              )
+            ),
+            backgroundColor: Colors.blue,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            // leading: GestureDetector(
+            //   onTap: () => {
+            //     Navigator.of(context).pushNamed(Routes.account)
+            //   },
+            //   child: const Icon(
+            //     Icons.account_circle,
+            //     color: Colors.blue,
+            //     size: 50,
+            //   ),
+            // ),
+            actions: [
+              GestureDetector(
+                onTap: () => {
+                  logout(context)
                 },
+                child: const Icon(
+                  Icons.logout,
+                  //color: Colors.white,
+                  size: 30,
+                ),
               ),
+              const SizedBox(width: 10,),
             ],
           ),
-        ),
-        appBar: AppBar(
-          title: Text(
-            "Estudiante",
-            style: GoogleFonts.lobster(
-              textStyle: const TextStyle(
-                //color: Colors.white,
-                fontSize: 30
-              ),
-            )
-          ),
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-          elevation: 0,
-          // leading: GestureDetector(
-          //   onTap: () => {
-          //     Navigator.of(context).pushNamed(Routes.account)
-          //   },
-          //   child: const Icon(
-          //     Icons.account_circle,
-          //     color: Colors.blue,
-          //     size: 50,
-          //   ),
-          // ),
-          actions: [
-            GestureDetector(
-              onTap: () => {
-                Navigator.of(context).pop()
-              },
-              child: const Icon(
-                Icons.logout,
-                //color: Colors.white,
-                size: 30,
-              ),
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xffe1f0f5),
+                  Color(0xffa6dee9)
+                ]
+              )
             ),
-            const SizedBox(width: 10,),
-          ],
+            child: const Center(
+              child: BotonEmergencia()
+            ),
+          )
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xffe1f0f5),
-                Color(0xffa6dee9)
-              ]
-            )
-          ),
-          child: const Center(
-            child: BotonEmergencia()
-          ),
-        )
       ),
     );
     // return MultiProvider(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:login_app/ui/account/account_controller.dart';
+import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -11,14 +13,158 @@ class AccountPage extends StatelessWidget {
     const double iconSize = 150;
     const double avatarSize = iconSize / 2;
     
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Perfil de usuario'),
-        elevation: 0,
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      ),
-      body: Container(
+    return ChangeNotifierProvider(
+      create: (_) {
+        final controller = AccountController();
+        controller.loadData();
+        return controller;
+      },
+      builder: (context, child) {
+        final controller = Provider.of<AccountController>(context);
+        if (controller.dataLoaded) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Perfil de usuario'),
+              elevation: 0,
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+            ),
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xffe1f0f5),
+                    Color(0xffa6dee9)
+                  ]
+                )
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                        children: [
+                          const CircleAvatar(
+                            child: Icon(
+                              Icons.account_circle,
+                              size: iconSize,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.blue,
+                            radius: avatarSize,
+                          ),
+                          Text(
+                            controller.fullName!,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Nombre de usuario:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            TextFormField(
+                              controller: controller.usernameController,
+                              //initialValue: controller.username,
+                              readOnly: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Correo Electrónico:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            TextFormField(
+                              controller: controller.emailController,
+                              //initialValue: controller.email,
+                              readOnly: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Numero de teléfono:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            TextFormField(
+                              keyboardType: TextInputType.phone,
+                              controller: controller.phoneController,
+                              inputFormatters: [
+                                MaskedInputFormatter('(###) ###-####')
+                              ],
+                              //initialValue: controller.phone,
+                              readOnly: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text('Actualizar datos'),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          );
+        }
+        return child!;
+      },
+      child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -29,126 +175,10 @@ class AccountPage extends StatelessWidget {
             ]
           )
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Column(
-                  children: const [
-                    CircleAvatar(
-                      child: Icon(
-                        Icons.account_circle,
-                        size: iconSize,
-                      ),
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.blue,
-                      radius: avatarSize,
-                    ),
-                    Text(
-                      'Richard Velasco',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Row(
-              children: [
-                const SizedBox(width: 20,),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Nombre de usuario:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextFormField(
-                        //decoration: InputDecoration(labelText: 'Nombre'),
-                        initialValue: 'asdsad',
-                        readOnly: true,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20,),
-              ],
-            ),
-            Row(
-              children: [
-                const SizedBox(width: 20,),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Correo Electrónico:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextFormField(
-                        //decoration: InputDecoration(labelText: 'Nombre'),
-                        initialValue: 'sdasdasd@gmail.com',
-                        readOnly: true,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20,),
-              ],
-            ),
-            Row(
-              children: [
-                const SizedBox(width: 20,),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Numero de teléfono:',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.phone,
-                        //decoration: InputDecoration(labelText: 'Nombre'),
-                        inputFormatters: [
-                          MaskedInputFormatter('(###) ###-####')
-                        ],
-                        initialValue: '04242715167',
-                        readOnly: true,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 20,),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Actualizar datos'),
-                ),
-              ],
-            )
-          ],
+        child: const Center(
+          child: CircularProgressIndicator()
         ),
-      )
+      ),
     );
   }
 }

@@ -10,9 +10,13 @@ void logout(BuildContext context){
     msg: "¿Seguro que desea cerrar sesión?",
     title: "Importante",
     acceptOnPressed: () async {
-      await storage.delete(key: 'username');
-      await storage.delete(key: 'token');
-      await storage.delete(key: 'refreshToken');
+      await storage.delete(key: 'id_usuario');
+      await storage.delete(key: 'username_usuario');
+      await storage.delete(key: 'correo_usuario');
+      await storage.delete(key: 'cedula_usuario');
+      await storage.delete(key: 'full_name_usuario');
+      await storage.delete(key: 'telefono_usuario');
+      await storage.delete(key: 'tipo_usuario_usuario');
       Navigator.of(context).pushNamedAndRemoveUntil(
         Routes.login,
         (route) => false

@@ -60,9 +60,7 @@ class RegisterModeloController extends ChangeNotifier {
           Navigator.of(context).pop();
         });
       } else {
-        globalAlert(context, msg: response.msg!, title: "Error", closeOnPressed: () {
-          Navigator.of(context).pop();
-        });
+        globalAlert(context, msg: response.msg!, title: "Error");
       }
     } catch (e) {
       log('$e');

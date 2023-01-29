@@ -12,15 +12,18 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 5)).then(
       (_) async {
-        // final String? username = await storage.read(key: 'username');
+        final String? tipoUsuario = await storage.read(key: 'tipo_usuario_usuario');
         // final String? id = await storage.read(key: 'id');
 
-        // if(username != null && id != null){
-        //   Navigator.of(context).pushReplacementNamed(Routes.home);
-        // } else {
-        //   Navigator.of(context).pushReplacementNamed(Routes.login);
-        // }
-        Navigator.of(context).pushReplacementNamed(Routes.login);
+        if(tipoUsuario != null){
+          if(tipoUsuario == 'Estudiante'){
+            Navigator.of(context).pushReplacementNamed(Routes.home);
+          } else if (tipoUsuario == 'Administrador') {
+            Navigator.of(context).pushReplacementNamed(Routes.adminHome);
+          }
+        } else {
+          Navigator.of(context).pushReplacementNamed(Routes.login);
+        }
       }
     );
     return WillPopScope(
