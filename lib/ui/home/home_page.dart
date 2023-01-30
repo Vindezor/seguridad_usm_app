@@ -7,6 +7,7 @@ import 'package:login_app/ui/home/home_controller.dart';
 import 'package:login_app/ui/home/widgets/boton_emergencia.dart';
 import 'package:login_app/utils/logout.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({ Key? key }) : super(key: key);
@@ -101,8 +102,9 @@ class HomePage extends StatelessWidget {
                 ]
               )
             ),
-            child: const Center(
-              child: BotonEmergencia()
+            child: Center(
+              //child: BotonEmergencia()
+              child: QrImage(data: 'Hola mundo'),
             ),
           )
         ),

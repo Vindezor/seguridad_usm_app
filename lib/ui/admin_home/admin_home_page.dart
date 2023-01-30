@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/ui/admin_home/widgets/admin_button.dart';
+import 'package:login_app/ui/admin_home/widgets/qr_scanner.dart';
 import 'package:login_app/utils/logout.dart';
 
 import '../../routes/routes.dart';
@@ -94,31 +95,32 @@ class AdminHomePage extends StatelessWidget {
               ]
             )
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  AdminButton(Icons.directions_bus, 'Registrar unidad', Routes.registerUnidad),
-                  AdminButton(Icons.badge, 'Cambiar rol', Routes.changeRol),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  AdminButton(Icons.bus_alert, 'Registrar marca', Routes.registerMarca),
-                  AdminButton(Icons.bus_alert, 'Registrar modelo', Routes.registerModelo),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  AdminButton(Icons.person_search, 'Asignar chofer', Routes.assignDriver),
-                ],
-              )
-            ],
-          ),
+          child: const QrScanner(),
+          // child: Column(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: [
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: const [
+          //         AdminButton(Icons.directions_bus, 'Registrar unidad', Routes.registerUnidad),
+          //         AdminButton(Icons.badge, 'Cambiar rol', Routes.changeRol),
+          //       ],
+          //     ),
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: const [
+          //         AdminButton(Icons.bus_alert, 'Registrar marca', Routes.registerMarca),
+          //         AdminButton(Icons.bus_alert, 'Registrar modelo', Routes.registerModelo),
+          //       ],
+          //     ),
+          //     Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: const [
+          //         AdminButton(Icons.person_search, 'Asignar chofer', Routes.assignDriver),
+          //       ],
+          //     )
+          //   ],
+          // ),
         )
       ),
     );

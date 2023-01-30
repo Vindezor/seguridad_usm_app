@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/routes/routes.dart';
 import 'package:login_app/widgets/global_alert.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({ Key? key }) : super(key: key);
@@ -60,6 +61,10 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 5)).then(
       (_) async {
+        var status = await Permission.camera.status;
+          if (!status.isGranted) {
+              await Permission.camera.request();
+          }
         LocationPermission permission = await Geolocator.checkPermission();
         if(permission == LocationPermission.denied){
           permission = await Geolocator.requestPermission();
