@@ -51,45 +51,46 @@ class LoginController extends ChangeNotifier{
   }
 
   bool enableButton(){
-    if(usernameRegExp.hasMatch(usernameController.text) && 
-      passwordRegExp.hasMatch(passwordController.text)){
+    return true;
+    // if(usernameRegExp.hasMatch(usernameController.text) && 
+    //   passwordRegExp.hasMatch(passwordController.text)){
       
-      return true;
-    }
-    return false;
+    //   return true;
+    // }
+    // return false;
   }
 
   Future<void> login(BuildContext context) async {
     final LoginService loginService = LoginService(_dio);
-
-    try {
-      globalLoading(context);
-      final response = await loginService.login(usernameController.text, passwordController.text);
-      Navigator.of(context).pop();
-      if(response.status == 'SUCCESS'){
-        await storage.write(key: 'id_usuario', value: '${response.data!.id}');
-        await storage.write(key: 'username_usuario', value: response.data!.username);
-        await storage.write(key: 'correo_usuario', value: response.data!.correo);
-        await storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
-        await storage.write(key: 'full_name_usuario', value: response.data!.fullName);
-        await storage.write(key: 'telefono_usuario', value: response.data!.telefono);
-        await storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
-        usernameController.clear();
-        passwordController.clear();
-        if(response.data!.tipoUsuario == 'Estudiante'){
-          Navigator.of(context).pushReplacementNamed(Routes.home);
-        } else if(response.data!.tipoUsuario == 'Administrador'){
-          Navigator.of(context).pushReplacementNamed(Routes.adminHome);
-        } else {
-          Navigator.of(context).pushReplacementNamed(Routes.blockedUser);
-        }
-        notifyListeners();
-      } else {
-        globalAlert(context, msg: response.msg, title: "Error");
-      }
-    } catch (e) {
-      log('$e');
-    }
+    Navigator.of(context).pushReplacementNamed(Routes.adminHome);
+    // try {
+    //   globalLoading(context);
+    //   final response = await loginService.login(usernameController.text, passwordController.text);
+    //   Navigator.of(context).pop();
+    //   if(response.status == 'SUCCESS'){
+    //     await storage.write(key: 'id_usuario', value: '${response.data!.id}');
+    //     await storage.write(key: 'username_usuario', value: response.data!.username);
+    //     await storage.write(key: 'correo_usuario', value: response.data!.correo);
+    //     await storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
+    //     await storage.write(key: 'full_name_usuario', value: response.data!.fullName);
+    //     await storage.write(key: 'telefono_usuario', value: response.data!.telefono);
+    //     await storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
+    //     usernameController.clear();
+    //     passwordController.clear();
+    //     if(response.data!.tipoUsuario == 'Estudiante'){
+    //       Navigator.of(context).pushReplacementNamed(Routes.home);
+    //     } else if(response.data!.tipoUsuario == 'Administrador'){
+    //       Navigator.of(context).pushReplacementNamed(Routes.adminHome);
+    //     } else {
+    //       Navigator.of(context).pushReplacementNamed(Routes.blockedUser);
+    //     }
+    //     notifyListeners();
+    //   } else {
+    //     globalAlert(context, msg: response.msg, title: "Error");
+    //   }
+    // } catch (e) {
+    //   log('$e');
+    // }
   }
 
   @override

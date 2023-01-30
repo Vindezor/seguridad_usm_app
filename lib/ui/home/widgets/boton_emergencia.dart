@@ -62,7 +62,7 @@ class _BotonEmergenciaState extends State<BotonEmergencia> with WidgetsBindingOb
       style: ElevatedButton.styleFrom(
         fixedSize: const Size(200, 200),
         shape: const CircleBorder(),
-        backgroundColor: Colors.red
+        //backgroundColor: Colors.red
       ),
       onPressed: () async {
         var enabled = await Geolocator.isLocationServiceEnabled();

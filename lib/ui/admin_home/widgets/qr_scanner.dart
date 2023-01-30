@@ -42,7 +42,16 @@ class _QrScannerState extends State<QrScanner> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      log('$scanData');
+      log('${scanData.code}');
     });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    if(controller != null){
+      controller!.dispose();
+    }
+    super.dispose();
   }
 }
