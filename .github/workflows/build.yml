@@ -75,35 +75,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN  }}
           commit: ${{ github.sha }}
           tag: ${{ steps.version.outputs.content }}
-      # commenting this block from here
-      # - name: Create a Release in GitHub
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: "build/app/outputs/apk/flutter-apk/*.apk"
-      #     token: ${{ secrets.GITHUB_TOKEN  }}
-      #     tag: ${{ steps.version.outputs.content }}
-      #     commit: ${{ github.sha }}
-      # - name: Upload app bundle
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: apk
-      #     path: build/app/outputs/apk/flutter-apk/
-      # commenting this block up to here
-  # release:
-  #   name: Release app to internal track
-  #   needs: [build]
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: Get appbundle from artifacts
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: appbundle
-  #     - name: Release app to internal track
-  #       uses: r0adkll/upload-google-play@v1
-  #       with:
-  #         serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
-  #         packageName: com.app.package_name
-  #         releaseFiles: app-release.aab
-  #         track: alpha
-  #         status: completed
