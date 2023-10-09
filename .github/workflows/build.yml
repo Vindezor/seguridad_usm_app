@@ -61,9 +61,10 @@ jobs:
           java-version: "12.x"
       - uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-          flutter-version: "3.0.0"
+          flutter-version: '2.x'
+          channel: 'any'
           architecture: x64
+      - run: flutter --version
       - run: flutter clean
       - run: flutter pub get
       - run: flutter build apk
