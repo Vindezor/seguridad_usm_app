@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:login_app/services/utils/global_ip.dart';
 
 import '../models/gender_model.dart';

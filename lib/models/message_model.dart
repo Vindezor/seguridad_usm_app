@@ -2,7 +2,6 @@
 //
 //     final messageModel = messageModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 MessageModel messageModelFromJson(String str) => MessageModel.fromJson(json.decode(str));

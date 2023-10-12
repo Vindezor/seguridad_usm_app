@@ -20,26 +20,24 @@ class AssignDriverController extends ChangeNotifier {
   List<Unidad>? unidades = [];
   int unidadesValue = 0;
 
-  String? validateUsuario(int? usuario){
+  String? validateUsuario(int? usuario) {
     notifyListeners();
-    if(usuario != null){
+    if (usuario != null) {
       return null;
     }
     return "Usuario es requerido";
   }
-  
-  String? validateUnidad(int? unidad){
+
+  String? validateUnidad(int? unidad) {
     notifyListeners();
-    if(unidad != null){
+    if (unidad != null) {
       return null;
     }
     return "Tipo de usuario es requerido";
   }
 
-  bool enableButton(){
-    if(usuarioValue != 0 &&
-      unidadesValue != 0){
-
+  bool enableButton() {
+    if (usuarioValue != 0 && unidadesValue != 0) {
       return true;
     }
     return false;
@@ -51,6 +49,7 @@ class AssignDriverController extends ChangeNotifier {
     try {
       final response = await getChoferService.getChofer();
       usuarios = response!.data;
+
       loadUnidades(context);
       notifyListeners();
     } catch (e) {
@@ -76,15 +75,20 @@ class AssignDriverController extends ChangeNotifier {
 
     try {
       globalLoading(context);
-      final response = await assignDriverService.assignDriver(usuarioValue, unidadesValue);
+      final response =
+          await assignDriverService.assignDriver(usuarioValue, unidadesValue);
+
       Navigator.of(context).pop();
-      if(response!.status == "SUCCESS"){
-        globalAlert(context, msg: 'Chofer asignado exitosamente', title: "Importante", closeOnPressed: () {
+      if (response!.status == "SUCCESS") {
+        globalAlert(context,
+            msg: 'Chofer asignado exitosamente',
+            title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
       } else {
-        globalAlert(context, msg: response.msg!, title: "Error", closeOnPressed: () {
+        globalAlert(context, msg: response.msg!, title: "Error",
+            closeOnPressed: () {
           Navigator.of(context).pop();
         });
       }

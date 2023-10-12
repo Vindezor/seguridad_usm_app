@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,7 +6,7 @@ import 'package:login_app/routes/routes.dart';
 import 'package:login_app/widgets/global_alert.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({ Key? key }) : super(key: key);
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -29,9 +27,10 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     // TODO: implement didChangeAppLifecycleState
-    if(state == AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       var permission = await Geolocator.checkPermission();
-      if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
+      if (permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse) {
         successLocation();
       }
     }
@@ -39,14 +38,14 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
   }
 
   void successLocation() async {
-    if(alertOpened){
+    if (alertOpened) {
       Navigator.pop(context);
     }
     final String? tipoUsuario = await storage.read(key: 'tipo_usuario_usuario');
     // final String? id = await storage.read(key: 'id');
 
-    if(tipoUsuario != null){
-      if(tipoUsuario == 'Estudiante'){
+    if (tipoUsuario != null) {
+      if (tipoUsuario == 'Estudiante') {
         Navigator.of(context).pushReplacementNamed(Routes.home);
       } else if (tipoUsuario == 'Administrador') {
         Navigator.of(context).pushReplacementNamed(Routes.adminHome);
@@ -58,72 +57,68 @@ class _SplashPageState extends State<SplashPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 5)).then(
-      (_) async {
-        LocationPermission permission = await Geolocator.checkPermission();
-        if(permission == LocationPermission.denied){
+    Future.delayed(const Duration(seconds: 5)).then((_) async {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
           permission = await Geolocator.requestPermission();
-          if(permission == LocationPermission.denied){
+          if (permission == LocationPermission.denied ||
+              permission == LocationPermission.deniedForever) {
             permission = await Geolocator.requestPermission();
-            if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever){
-              permission = await Geolocator.requestPermission();
-            } else if(permission == LocationPermission.deniedForever){
-              alertOpened = true;
-              globalAlert(
-                context,
-                msg: 'Los servicios de ubicacion son necesarios para poder usar la aplicacion, por favor, activarlos desde los ajustes de la aplicación',
-                title: 'Importante',
-                closeOnPressed: () async {
-                  await Geolocator.openAppSettings();
-                },
-                closeText: 'Abrir ajustes',
-              );
-            } else if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
-              successLocation();
-            }
-          } else if(permission == LocationPermission.deniedForever){
+          } else if (permission == LocationPermission.deniedForever) {
             alertOpened = true;
+
             globalAlert(
               context,
-              msg: 'Los servicios de ubicacion son necesarios para poder usar la aplicacion, por favor, activarlos desde los ajustes de la aplicación',
+              msg:
+                  'Los servicios de ubicacion son necesarios para poder usar la aplicacion, por favor, activarlos desde los ajustes de la aplicación',
               title: 'Importante',
               closeOnPressed: () async {
                 await Geolocator.openAppSettings();
               },
               closeText: 'Abrir ajustes',
             );
-          } else if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
+          } else if (permission == LocationPermission.always ||
+              permission == LocationPermission.whileInUse) {
             successLocation();
           }
-        } else if(permission == LocationPermission.always || permission == LocationPermission.whileInUse){
+        } else if (permission == LocationPermission.deniedForever) {
+          alertOpened = true;
+
+          globalAlert(
+            context,
+            msg:
+                'Los servicios de ubicacion son necesarios para poder usar la aplicacion, por favor, activarlos desde los ajustes de la aplicación',
+            title: 'Importante',
+            closeOnPressed: () async {
+              await Geolocator.openAppSettings();
+            },
+            closeText: 'Abrir ajustes',
+          );
+        } else if (permission == LocationPermission.always ||
+            permission == LocationPermission.whileInUse) {
           successLocation();
         }
+      } else if (permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse) {
+        successLocation();
       }
-    );
+    });
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xffe1f0f5),
-                Color(0xffa6dee9)
-              ]
-            )
-          ),
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xffe1f0f5), Color(0xffa6dee9)])),
           child: Center(
-            child: Text(
-              "Seguridad USM",
-              style: GoogleFonts.lobster(
-                textStyle: const TextStyle(
-                  color: Colors.blue,
-                  fontSize: 50
-                ),
-              )
-            ),
+            child: Text("Seguridad USM",
+                style: GoogleFonts.lobster(
+                  textStyle: const TextStyle(color: Colors.blue, fontSize: 50),
+                )),
           ),
         ),
       ),

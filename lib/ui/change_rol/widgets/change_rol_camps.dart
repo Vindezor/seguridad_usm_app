@@ -18,7 +18,7 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<ChangeRolController>(context);
-    const double? customHeight = 30;
+    const double customHeight = 30;
 
     return Form(
       key: _formKey,
@@ -52,8 +52,8 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
             ),
             items: controller.usuarios!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.username),
                 value: e.id,
+                child: Text(e.username),
               )
             ).toList(),
             validator: controller.validateUsuario,
@@ -78,8 +78,8 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
             ),
             items: controller.tipoUsuarios!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.tipoUsuario),
                 value: e.id,
+                child: Text(e.tipoUsuario),
               )
             ).toList(),
             validator: controller.validateTipoUsuario,
@@ -95,17 +95,17 @@ class _ChangeRolCampsState extends State<ChangeRolCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Registrar cambio",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
         ],

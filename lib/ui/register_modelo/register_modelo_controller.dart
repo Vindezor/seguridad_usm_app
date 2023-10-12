@@ -13,34 +13,32 @@ class RegisterModeloController extends ChangeNotifier {
   final _dio = Dio();
 
   TextEditingController modeloController = TextEditingController();
-  
+
   RegExp modeloRegExp = RegExp(r'^[A-Za-z0-9 \-]{2,}$');
-  
+
   List<Marca>? marcas = [];
   int marcaValue = 0;
 
-  String? validateMarca(int? marca){
+  String? validateMarca(int? marca) {
     notifyListeners();
-    if(marca != null){
+    if (marca != null) {
       return null;
     }
     return "Marca invalida";
   }
 
-  String? validateModelo(String? modelo){
+  String? validateModelo(String? modelo) {
     notifyListeners();
-    if(modelo != null){
-      if(modeloRegExp.hasMatch(modelo)){
+    if (modelo != null) {
+      if (modeloRegExp.hasMatch(modelo)) {
         return null;
       }
-    } 
+    }
     return "Modelo invalido";
   }
 
-  bool enableButton(){
-    if(modeloRegExp.hasMatch(modeloController.text) &&
-      marcaValue != 0){
-
+  bool enableButton() {
+    if (modeloRegExp.hasMatch(modeloController.text) && marcaValue != 0) {
       return true;
     }
     return false;
@@ -48,14 +46,19 @@ class RegisterModeloController extends ChangeNotifier {
 
   Future<void> register(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    final RegisterModeloService registerModeloService = RegisterModeloService(_dio);
+    final RegisterModeloService registerModeloService =
+        RegisterModeloService(_dio);
 
     try {
       globalLoading(context);
-      final response = await registerModeloService.registerModelo(modeloController.text, marcaValue);
+      final response = await registerModeloService.registerModelo(
+          modeloController.text, marcaValue);
+
       Navigator.of(context).pop();
-      if(response!.status == "SUCCESS"){
-        globalAlert(context, msg: 'Modelo registrado exitosamente', title: "Importante", closeOnPressed: () {
+      if (response!.status == "SUCCESS") {
+        globalAlert(context,
+            msg: 'Modelo registrado exitosamente',
+            title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
@@ -78,7 +81,7 @@ class RegisterModeloController extends ChangeNotifier {
       log("$e");
     }
   }
-  
+
   @override
   void dispose() {
     // TODO: implement dispose

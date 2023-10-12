@@ -2,7 +2,6 @@
 //
 //     final listaModel = listaModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 GenderModel listaModelFromJson(String str) => GenderModel.fromJson(json.decode(str));

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/ui/register_marca/register_marca_controller.dart';
-import 'package:login_app/ui/register_marca/widgets/register_marca_camps.dart';
 import 'package:login_app/ui/register_modelo/register_modelo_controller.dart';
 import 'package:login_app/ui/register_modelo/widgets/register_modelo_camps.dart';
 import 'package:provider/provider.dart';

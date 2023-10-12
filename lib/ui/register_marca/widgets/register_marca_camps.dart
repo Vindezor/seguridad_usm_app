@@ -17,7 +17,7 @@ class _RegisterMarcaCampsState extends State<RegisterMarcaCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterMarcaController>(context);
-    const double? customHeight = 30;
+    const double customHeight = 30;
     return Form(
       key: _formKey,
       child: ListView(
@@ -59,17 +59,17 @@ class _RegisterMarcaCampsState extends State<RegisterMarcaCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Registrar",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
         ],

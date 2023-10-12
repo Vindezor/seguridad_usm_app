@@ -17,7 +17,7 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterModeloController>(context);
-    const double? customHeight = 30;
+    const double customHeight = 30;
 
     return Form(
       key: _formKey,
@@ -51,8 +51,8 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
             ),
             items: controller.marcas!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.marca),
                 value: e.id,
+                child: Text(e.marca),
               )
             ).toList(),
             validator: controller.validateMarca,
@@ -86,17 +86,17 @@ class _RegisterModeloCampsState extends State<RegisterModeloCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Registrar",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
         ],

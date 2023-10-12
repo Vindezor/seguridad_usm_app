@@ -2,7 +2,6 @@
 //
 //     final listaModel = listaModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 MarcaModel listaModelFromJson(String str) => MarcaModel.fromJson(json.decode(str));

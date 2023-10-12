@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/utils/uppercase_formatter.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +20,7 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RegisterUnidadController>(context);
-    const double? customHeight = 30;
+    const double customHeight = 30;
 
     return Form(
       key: _formKey,
@@ -73,8 +71,8 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
             ),
             items: controller.marcas!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.marca),
                 value: e.id,
+                child: Text(e.marca),
               )
             ).toList(),
             validator: controller.validateMarca,
@@ -102,8 +100,8 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
             ),
             items: controller.modelosAct!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.modelo),
                 value: e.id,
+                child: Text(e.modelo),
               )
             ).toList(),
             validator: controller.validateModelo,
@@ -173,17 +171,17 @@ class _RegisterUnidadCampsState extends State<RegisterUnidadCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Registrar",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
         ],

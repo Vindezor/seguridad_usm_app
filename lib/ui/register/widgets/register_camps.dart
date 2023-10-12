@@ -1,10 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -158,8 +155,8 @@ class _RegisterCampsState extends State<RegisterCamps> {
             ),
             items: controller.generos!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.gender),
                 value: e.id,
+                child: Text(e.gender),
               )
             ).toList(),
             validator: controller.validateGender,
@@ -197,17 +194,17 @@ class _RegisterCampsState extends State<RegisterCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Registrarse",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
           const SizedBox(height: 10,),

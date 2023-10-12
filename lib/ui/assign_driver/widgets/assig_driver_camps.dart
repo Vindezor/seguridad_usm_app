@@ -17,7 +17,7 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<AssignDriverController>(context);
-    const double? customHeight = 30;
+    const double customHeight = 30;
 
     return Form(
       key: _formKey,
@@ -52,8 +52,8 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
             ),
             items: controller.unidades!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.nombre),
                 value: e.id,
+                child: Text(e.nombre),
               )
             ).toList(),
             validator: controller.validateUnidad,
@@ -78,8 +78,8 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
             ),
             items: controller.usuarios!.map(
               (e) => DropdownMenuItem(
-                child: Text(e.username),
                 value: e.id,
+                child: Text(e.username),
               )
             ).toList(),
             validator: controller.validateUsuario,
@@ -95,17 +95,17 @@ class _AssignDriverCampsState extends State<AssignDriverCamps> {
             child: CupertinoButton(
               disabledColor: Colors.grey,
               color: Colors.blue,
+              onPressed: (controller.enableButton())
+              ? () async {
+                  await controller.register(context);
+              }
+              : null,
               child: const Text(
                 "Asignar chofer",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
-              onPressed: (controller.enableButton())
-              ? () async {
-                  await controller.register(context);
-              }
-              : null,
             ),
           ),
         ],

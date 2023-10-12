@@ -2,7 +2,6 @@
 //
 //     final listaModel = listaModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ModeloModel listaModelFromJson(String str) => ModeloModel.fromJson(json.decode(str));

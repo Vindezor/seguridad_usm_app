@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:login_app/ui/account/account_controller.dart';
 import 'package:provider/provider.dart';
@@ -50,13 +48,13 @@ class AccountPage extends StatelessWidget {
                       Column(
                         children: [
                           const CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.blue,
+                            radius: avatarSize,
                             child: Icon(
                               Icons.account_circle,
                               size: iconSize,
                             ),
-                            backgroundColor: Colors.transparent,
-                            foregroundColor: Colors.blue,
-                            radius: avatarSize,
                           ),
                           Text(
                             controller.fullName!,

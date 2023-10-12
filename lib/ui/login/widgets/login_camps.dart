@@ -1,17 +1,12 @@
-import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/routes/routes.dart';
 import 'package:login_app/ui/login/login_controller.dart';
-import 'package:login_app/widgets/global_alert.dart';
 import 'package:provider/provider.dart';
 
-import '../../../services/login_service.dart';
 
 class LoginCamps extends StatefulWidget {
   const LoginCamps({ Key? key }) : super(key: key);
@@ -89,17 +84,17 @@ class _LoginCampsState extends State<LoginCamps> {
           CupertinoButton(
             disabledColor: Colors.grey,
             color: Colors.blue,
+            onPressed: (controller.enableButton())
+            ? () async {
+                await controller.login(context);
+            }
+            : null,
             child: const Text(
               "Iniciar sesión",
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
-            onPressed: (controller.enableButton())
-            ? () async {
-                await controller.login(context);
-            }
-            : null,
           ),
           RichText(
             text: TextSpan(

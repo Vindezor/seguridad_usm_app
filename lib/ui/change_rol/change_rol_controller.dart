@@ -13,33 +13,31 @@ import '../../widgets/global_loading.dart';
 
 class ChangeRolController extends ChangeNotifier {
   final Dio _dio = Dio();
-  
+
   List<Usuario>? usuarios = [];
   int usuarioValue = 0;
 
   List<TipoUsuario>? tipoUsuarios = [];
   int tipoUsuariosValue = 0;
 
-  String? validateUsuario(int? usuario){
+  String? validateUsuario(int? usuario) {
     notifyListeners();
-    if(usuario != null){
+    if (usuario != null) {
       return null;
     }
     return "Usuario es requerido";
   }
-  
-  String? validateTipoUsuario(int? tipoUsuario){
+
+  String? validateTipoUsuario(int? tipoUsuario) {
     notifyListeners();
-    if(tipoUsuario != null){
+    if (tipoUsuario != null) {
       return null;
     }
     return "Tipo de usuario es requerido";
   }
 
-  bool enableButton(){
-    if(usuarioValue != 0 &&
-      tipoUsuariosValue != 0){
-
+  bool enableButton() {
+    if (usuarioValue != 0 && tipoUsuariosValue != 0) {
       return true;
     }
     return false;
@@ -77,15 +75,21 @@ class ChangeRolController extends ChangeNotifier {
 
     try {
       globalLoading(context);
-      final response = await updateRolService.updateRol(usuarioValue, tipoUsuariosValue);
+      final response =
+          await updateRolService.updateRol(usuarioValue, tipoUsuariosValue);
+
       Navigator.of(context).pop();
-      if(response!.status == "SUCCESS"){
-        globalAlert(context, msg: 'Información actualizada exitosamente', title: "Importante", closeOnPressed: () {
+      if (response!.status == "SUCCESS") {
+        globalAlert(context,
+            msg: 'Información actualizada exitosamente',
+            title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
       } else {
-        globalAlert(context, msg: 'Error al actualizar la información', title: "Importante", closeOnPressed: () {
+        globalAlert(context,
+            msg: 'Error al actualizar la información',
+            title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
         });
       }

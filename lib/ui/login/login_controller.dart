@@ -10,7 +10,7 @@ import 'package:login_app/widgets/global_loading.dart';
 import '../../services/login_service.dart';
 import '../../widgets/global_alert.dart';
 
-class LoginController extends ChangeNotifier{
+class LoginController extends ChangeNotifier {
   final _dio = Dio();
 
   TextEditingController usernameController = TextEditingController();
@@ -20,40 +20,38 @@ class LoginController extends ChangeNotifier{
 
   RegExp usernameRegExp = RegExp(r'^[A-Za-z0-9]{5,}$');
   RegExp passwordRegExp = RegExp(
-    r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[\.,!@#$%^&*])[\w\.,!@#$%^&*]{8,}$'
-  );
+      r'^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[\.,!@#$%^&*])[\w\.,!@#$%^&*]{8,}$');
 
   bool hidePassword = true;
-  
-  String? validateUsername(String? username){
+
+  String? validateUsername(String? username) {
     notifyListeners();
-    if(username != null){
-      if(usernameRegExp.hasMatch(username)){
+    if (username != null) {
+      if (usernameRegExp.hasMatch(username)) {
         return null;
       }
-    } 
+    }
     return "Usuario invalido";
   }
 
-  String? validatePassword(String? password){
+  String? validatePassword(String? password) {
     notifyListeners();
-    if(password != null){
-      if(passwordRegExp.hasMatch(password)){
+    if (password != null) {
+      if (passwordRegExp.hasMatch(password)) {
         return null;
       }
-    } 
+    }
     return "Clave invalida";
   }
 
-  void changeHidePassword(){
+  void changeHidePassword() {
     hidePassword = !hidePassword;
     notifyListeners();
   }
 
-  bool enableButton(){
-    if(usernameRegExp.hasMatch(usernameController.text) && 
-      passwordRegExp.hasMatch(passwordController.text)){
-      
+  bool enableButton() {
+    if (usernameRegExp.hasMatch(usernameController.text) &&
+        passwordRegExp.hasMatch(passwordController.text)) {
       return true;
     }
     return false;
@@ -64,21 +62,30 @@ class LoginController extends ChangeNotifier{
 
     try {
       globalLoading(context);
-      final response = await loginService.login(usernameController.text, passwordController.text);
+      final response = await loginService.login(
+          usernameController.text, passwordController.text);
+
       Navigator.of(context).pop();
-      if(response.status == 'SUCCESS'){
+      if (response.status == 'SUCCESS') {
         await storage.write(key: 'id_usuario', value: '${response.data!.id}');
-        await storage.write(key: 'username_usuario', value: response.data!.username);
-        await storage.write(key: 'correo_usuario', value: response.data!.correo);
-        await storage.write(key: 'cedula_usuario', value: '${response.data!.cedula}');
-        await storage.write(key: 'full_name_usuario', value: response.data!.fullName);
-        await storage.write(key: 'telefono_usuario', value: response.data!.telefono);
-        await storage.write(key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
+        await storage.write(
+            key: 'username_usuario', value: response.data!.username);
+        await storage.write(
+            key: 'correo_usuario', value: response.data!.correo);
+        await storage.write(
+            key: 'cedula_usuario', value: '${response.data!.cedula}');
+        await storage.write(
+            key: 'full_name_usuario', value: response.data!.fullName);
+        await storage.write(
+            key: 'telefono_usuario', value: response.data!.telefono);
+        await storage.write(
+            key: 'tipo_usuario_usuario', value: response.data!.tipoUsuario);
         usernameController.clear();
         passwordController.clear();
-        if(response.data!.tipoUsuario == 'Estudiante'){
+
+        if (response.data!.tipoUsuario == 'Estudiante') {
           Navigator.of(context).pushReplacementNamed(Routes.home);
-        } else if(response.data!.tipoUsuario == 'Administrador'){
+        } else if (response.data!.tipoUsuario == 'Administrador') {
           Navigator.of(context).pushReplacementNamed(Routes.adminHome);
         } else {
           Navigator.of(context).pushReplacementNamed(Routes.blockedUser);

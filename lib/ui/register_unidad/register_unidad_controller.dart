@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/models/modelo_model.dart';
 import 'package:login_app/services/register_unidad_service.dart';
@@ -32,67 +31,65 @@ class RegisterUnidadController extends ChangeNotifier {
   RegExp nombreUnidadRegExp = RegExp(r'^[a-zA-Z ]{5,}$');
   RegExp placaUnidadRegExp = RegExp(r'^[a-zA-Z0-9]{6,7}$');
 
-  String? validateMarca(int? marca){
+  String? validateMarca(int? marca) {
     notifyListeners();
-    if(marca != null){
+    if (marca != null) {
       return null;
     }
     return "Marca es requerida";
   }
 
-  String? validateYear(String? year){
+  String? validateYear(String? year) {
     notifyListeners();
-    if(year != ''){
+    if (year != '') {
       return null;
     }
     return "Año es requerido";
   }
 
-
-  String? validateModelo(int? modelo){
+  String? validateModelo(int? modelo) {
     notifyListeners();
-    if(modelo != null){
+    if (modelo != null) {
       return null;
     }
     return "Modelo es requerido";
   }
 
-  String? validateNombreUnidad(String? nombreUnidad){
+  String? validateNombreUnidad(String? nombreUnidad) {
     notifyListeners();
-    if(nombreUnidad != null){
-      if(nombreUnidadRegExp.hasMatch(nombreUnidad)){
+    if (nombreUnidad != null) {
+      if (nombreUnidadRegExp.hasMatch(nombreUnidad)) {
         return null;
       }
     }
     return "Nombre Completo invalido";
   }
 
-  String? validatePlacaUnidad(String? placaUnidad){
+  String? validatePlacaUnidad(String? placaUnidad) {
     notifyListeners();
-    if(placaUnidad != null){
-      if(placaUnidadRegExp.hasMatch(placaUnidad)){
+    if (placaUnidad != null) {
+      if (placaUnidadRegExp.hasMatch(placaUnidad)) {
         return null;
       }
     }
     return "Placa invalida";
   }
 
-
-  bool enableButton(){
-    if(placaUnidadRegExp.hasMatch(placaUnidadController.text) &&
-      nombreUnidadRegExp.hasMatch(nombreUnidadController.text) &&
-      modeloValue != 0 &&
-      marcaValue != 0 &&
-      yearValue != 0){
-
+  bool enableButton() {
+    if (placaUnidadRegExp.hasMatch(placaUnidadController.text) &&
+        nombreUnidadRegExp.hasMatch(nombreUnidadController.text) &&
+        modeloValue != 0 &&
+        marcaValue != 0 &&
+        yearValue != 0) {
       return true;
     }
     return false;
   }
 
-  void changeModelo(int idMarca){
-    if(modelos != null){
-      modelosAct = modelos!.where((element) => element.idMarca == idMarca).toList();
+  void changeModelo(int idMarca) {
+    if (modelos != null) {
+      modelosAct =
+          modelos!.where((element) => element.idMarca == idMarca).toList();
       modeloValue = 0;
       notifyListeners();
     }
@@ -104,6 +101,7 @@ class RegisterUnidadController extends ChangeNotifier {
     try {
       final response = await getMarcaService.getMarca();
       marcas = response!.data;
+
       loadModelo(context);
       notifyListeners();
     } catch (e) {
@@ -125,19 +123,28 @@ class RegisterUnidadController extends ChangeNotifier {
 
   Future<void> register(BuildContext context) async {
     FocusScope.of(context).unfocus();
-    final RegisterUnidadService registerUnidadService = RegisterUnidadService(_dio);
+    final RegisterUnidadService registerUnidadService =
+        RegisterUnidadService(_dio);
 
     try {
       globalLoading(context);
-      final response = await registerUnidadService.registerUnidad(nombreUnidadController.text, placaUnidadController.text, yearValue, modeloValue);
+      final response = await registerUnidadService.registerUnidad(
+          nombreUnidadController.text,
+          placaUnidadController.text,
+          yearValue,
+          modeloValue);
+
       Navigator.of(context).pop();
-      if(response!.status == "SUCCESS"){
-        globalAlert(context, msg: 'Unidad registrada exitosamente', title: "Importante", closeOnPressed: () {
+      if (response!.status == "SUCCESS") {
+        globalAlert(context,
+            msg: 'Unidad registrada exitosamente',
+            title: "Importante", closeOnPressed: () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         });
       } else {
-        globalAlert(context, msg: response.msg!, title: "Error", closeOnPressed: () {
+        globalAlert(context, msg: response.msg!, title: "Error",
+            closeOnPressed: () {
           Navigator.of(context).pop();
         });
       }
@@ -146,28 +153,28 @@ class RegisterUnidadController extends ChangeNotifier {
     }
   }
 
-  void handleReadOnlyInputClick(BuildContext context, GlobalKey<FormState> formKey) {
+  void handleReadOnlyInputClick(
+      BuildContext context, GlobalKey<FormState> formKey) {
     showBottomSheet(
         context: context,
         builder: (BuildContext context) => SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - 100,
-          child: YearPicker(
-            selectedDate: DateTime.now(),
-            firstDate: DateTime(DateTime.now().year - 100),
-            lastDate: DateTime.now(),
-            onChanged: (val) {
-              yearController.text = val.year.toString();
-              yearValue = val.year;
-              Navigator.pop(context);
-              if(formKey.currentState != null){
-                formKey.currentState!.validate();
-              }
-              notifyListeners();
-            },
-          ),
-      )
-    );
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 100,
+              child: YearPicker(
+                selectedDate: DateTime.now(),
+                firstDate: DateTime(DateTime.now().year - 100),
+                lastDate: DateTime.now(),
+                onChanged: (val) {
+                  yearController.text = val.year.toString();
+                  yearValue = val.year;
+                  Navigator.pop(context);
+                  if (formKey.currentState != null) {
+                    formKey.currentState!.validate();
+                  }
+                  notifyListeners();
+                },
+              ),
+            ));
   }
 
   @override

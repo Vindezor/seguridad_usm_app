@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:login_app/ui/home/home_controller.dart';
 import 'package:login_app/widgets/global_alert.dart';
@@ -14,8 +11,8 @@ class BotonEmergencia extends StatefulWidget {
   State<BotonEmergencia> createState() => _BotonEmergenciaState();
 }
 
-class _BotonEmergenciaState extends State<BotonEmergencia> with WidgetsBindingObserver{
-
+class _BotonEmergenciaState extends State<BotonEmergencia>
+    with WidgetsBindingObserver {
   bool alertOpened = false;
 
   @override
@@ -31,9 +28,9 @@ class _BotonEmergenciaState extends State<BotonEmergencia> with WidgetsBindingOb
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     // TODO: implement didChangeAppLifecycleState
-    if(state == AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       var enabled = await Geolocator.isLocationServiceEnabled();
-      if(enabled && alertOpened){
+      if (enabled && alertOpened) {
         Navigator.pop(context);
       }
     }
@@ -42,11 +39,13 @@ class _BotonEmergenciaState extends State<BotonEmergencia> with WidgetsBindingOb
 
   void checkLocation() async {
     var enabled = await Geolocator.isLocationServiceEnabled();
-    if(!enabled){
+    if (!enabled) {
       alertOpened = true;
+
       globalAlert(
         context,
-        msg: 'Debe activar el servicio de localizacion para poder pedir emergencia',
+        msg:
+            'Debe activar el servicio de localizacion para poder pedir emergencia',
         title: 'Importante',
         closeText: 'Abrir Ajustes',
         closeOnPressed: () => Geolocator.openLocationSettings(),
@@ -59,31 +58,32 @@ class _BotonEmergenciaState extends State<BotonEmergencia> with WidgetsBindingOb
     final controller = Provider.of<HomeController>(context);
 
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        fixedSize: const Size(200, 200),
-        shape: const CircleBorder(),
-       // backgroundColor: Colors.red
-      ),
-      onPressed: () async {
-        var enabled = await Geolocator.isLocationServiceEnabled();
-        if(enabled){
-          controller.emergencia(context);
-        }
-        else {
-          alertOpened = true;
-          globalAlert(
-            context,
-            msg: 'Debe activar el servicio de localizacion para poder pedir emergencia',
-            title: 'Importante',
-            closeText: 'Abrir Ajustes',
-            closeOnPressed: () => Geolocator.openLocationSettings(),
-          );
-        }
-      },
-      child: const Text('EMERGENCIA', style: TextStyle(
-        fontSize: 20
-      ),)
-    );
+        style: ElevatedButton.styleFrom(
+          fixedSize: const Size(200, 200),
+          shape: const CircleBorder(),
+          // backgroundColor: Colors.red
+        ),
+        onPressed: () async {
+          var enabled = await Geolocator.isLocationServiceEnabled();
+
+          if (enabled) {
+            controller.emergencia(context);
+          } else {
+            alertOpened = true;
+            globalAlert(
+              context,
+              msg:
+                  'Debe activar el servicio de localizacion para poder pedir emergencia',
+              title: 'Importante',
+              closeText: 'Abrir Ajustes',
+              closeOnPressed: () => Geolocator.openLocationSettings(),
+            );
+          }
+        },
+        child: const Text(
+          'EMERGENCIA',
+          style: TextStyle(fontSize: 20),
+        ));
   }
 
   @override

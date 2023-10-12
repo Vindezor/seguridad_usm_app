@@ -1,12 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_app/routes/routes.dart';
-import 'package:login_app/ui/home/home_controller.dart';
-import 'package:login_app/ui/home/widgets/boton_emergencia.dart';
 import 'package:login_app/utils/logout.dart';
-import 'package:provider/provider.dart';
 
 class BlockedUserPage extends StatelessWidget {
   const BlockedUserPage({ Key? key }) : super(key: key);
