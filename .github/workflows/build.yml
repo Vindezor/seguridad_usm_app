@@ -9,10 +9,7 @@ jobs:
   version:
     name: Create version number
     runs-on: macos-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
+    permissions: write-all
     steps:
       - uses: actions/checkout@v1
       - name: Fetch all history for all tags and branches
